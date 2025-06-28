@@ -32,10 +32,10 @@ public class BookingEntity {
     @JoinColumn(name = "homestay_id", nullable = false)
     private HomestayEntity homestayEntity;
 
-    @Column(name = "checkin_date", nullable = false)
+    @Column(name = "check_in_date", nullable = false)
     private LocalDate checkInDate;
 
-    @Column(name = "checkout_date", nullable = false)
+    @Column(name = "check_out_date", nullable = false)
     private LocalDate checkOutDate;
 
     @Column(nullable = false)

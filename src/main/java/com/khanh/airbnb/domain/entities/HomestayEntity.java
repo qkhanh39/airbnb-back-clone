@@ -26,8 +26,11 @@ public class HomestayEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
+
     private String name;
+
     private String description;
+
     private String address;
 
     @ManyToOne
