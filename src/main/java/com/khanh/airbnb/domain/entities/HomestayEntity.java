@@ -30,10 +30,17 @@ public class HomestayEntity {
     private String description;
     private String address;
 
-    private Integer wardId;
+    @ManyToOne
+    @JoinColumn(name = "ward_id")
+    private WardEntity wardEntity;
 
-    private Integer districtId;
-    private Integer cityId;
+    @ManyToOne
+    @JoinColumn(name = "district_id")
+    private DistrictEntity districtEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private CityEntity cityEntity;
 
     @Column(name = "max_guests")
     private Integer maxGuests;
