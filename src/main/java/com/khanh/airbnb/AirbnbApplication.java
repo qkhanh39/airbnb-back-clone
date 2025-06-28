@@ -18,6 +18,7 @@ public class AirbnbApplication implements CommandLineRunner {
 	}
 
 
+
 	@Override
 	public void run(final String... args) {
 		log.info("Datasource: " + dataSource.toString());
