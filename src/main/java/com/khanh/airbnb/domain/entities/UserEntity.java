@@ -18,9 +18,12 @@ import java.math.BigInteger;
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
-    private Long user_id;
+    @SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq", allocationSize = 1)
+    @Column(name = "user_id")
+    private Long userId;
     private String username;
     private String password;
     private String email;
-    private String full_name;
+    @Column(name = "full_name")
+    private String fullName;
 }
