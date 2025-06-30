@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "bookings")
+@Table(name = "homestay_availability")
 public class HomestayAvailabilityEntity {
 
     @EmbeddedId

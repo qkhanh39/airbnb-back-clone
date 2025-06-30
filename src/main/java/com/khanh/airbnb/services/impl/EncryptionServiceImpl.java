@@ -18,10 +18,6 @@ public class EncryptionServiceImpl implements EncryptionService {
         salt = BCrypt.gensalt(saltRounds);
     }
 
-    void setSaltRoundsForTest(int saltRounds) {
-        this.saltRounds = saltRounds;
-    }
-
     @Override
     public String encryptPassword(String password) {
         return BCrypt.hashpw(password, salt);
