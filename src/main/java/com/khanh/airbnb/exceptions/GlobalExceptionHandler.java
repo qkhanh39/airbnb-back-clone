@@ -30,6 +30,13 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage(), request);
     }
 
+    @ExceptionHandler(AuthenticationErrorException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse handleUsernameOrPasswordNotExist(AuthenticationErrorException ex, HttpServletRequest request) {
+        logger.warn("Authentication error: {}", ex.getMessage());
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage(), request);
+    }
+
     private ErrorResponse buildErrorResponse(HttpStatus status, String message, HttpServletRequest request) {
         return new ErrorResponse(
                 LocalDateTime.now(),
