@@ -1,4 +1,4 @@
-package com.khanh.airbnb.domain.repositories;
+package com.khanh.airbnb.repositories;
 
 import com.khanh.airbnb.domain.entities.CityEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

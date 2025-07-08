@@ -1,6 +1,7 @@
 package com.khanh.airbnb.domain.entities;
 
 import com.khanh.airbnb.domain.enums.BookingStatus;
+import com.khanh.airbnb.domain.enums.HomestayStatus;
 import com.khanh.airbnb.domain.keys.HomestayAvailabilityKey;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,10 +24,10 @@ public class HomestayAvailabilityEntity {
     @MapsId("homestayId")
     @JoinColumn(name = "homestay_id")
     private HomestayEntity homestayEntity;
-    private Double price;
+    private Integer price;
 
     @Enumerated(EnumType.STRING)
-    private BookingStatus status;
+    private HomestayStatus status;
 
     @ManyToOne
     @JoinColumn(name = "booking_id")

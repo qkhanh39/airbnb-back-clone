@@ -1,7 +1,6 @@
 package com.khanh.airbnb.dto.booking;
 
 import com.khanh.airbnb.domain.enums.BookingStatus;
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +16,7 @@ import java.time.LocalDateTime;
 public class BookingResponseDto {
     private Long bookingId;
     private Long homestayId;
+    private String bookingPersonName;
     private String homestayName;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;

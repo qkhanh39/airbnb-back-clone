@@ -12,5 +12,6 @@ public interface BookingMapper {
 
     @Mapping(source = "homestayEntity.homestayId", target = "homestayId")
     @Mapping(source = "homestayEntity.name", target = "homestayName")
+    @Mapping(source = "userEntity.fullName", target = "bookingPersonName")
     BookingResponseDto toDto(BookingEntity bookingEntity);
 }

@@ -19,4 +19,8 @@ public class WardEntity {
     @Column(name = "ward_id")
     private Integer wardId;
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "district_id", nullable = false)
+    private DistrictEntity districtEntity;
 }
