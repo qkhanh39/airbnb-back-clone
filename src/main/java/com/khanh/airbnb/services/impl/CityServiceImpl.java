@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 @Service
 public class CityServiceImpl implements CityService {
 
-    private CityRepository cityRepository;
-    private CityMapper cityMapper;
+    private final CityRepository cityRepository;
+    private final CityMapper cityMapper;
 
     public CityServiceImpl(CityRepository cityRepository, CityMapper cityMapper) {
         this.cityRepository = cityRepository;

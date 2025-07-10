@@ -29,9 +29,6 @@ public class LoginServiceTests {
     @Mock
     private JWTService jwtService;
 
-    @Mock
-    private AuthService authService;
-
     @InjectMocks
     private LoginServiceImpl loginService;
 
@@ -55,7 +52,7 @@ public class LoginServiceTests {
 
     @Test
     void testLoginUserThrowsExceptionWhenUsernameNotFound() {
-        LoginRequestDto loginRequestDto = new LoginRequestDto("test-user", "testpassword");
+        LoginRequestDto loginRequestDto = new LoginRequestDto("test-user", "password");
         when(userRepository.findByUsername(loginRequestDto.getUsername())).thenReturn(Optional.empty());
 
         assertThrows(AuthenticationErrorException.class, () -> loginService.loginUser(loginRequestDto));

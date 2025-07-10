@@ -3,6 +3,7 @@ package com.khanh.airbnb.services.impl;
 import com.khanh.airbnb.domain.entities.CityEntity;
 import com.khanh.airbnb.domain.entities.DistrictEntity;
 import com.khanh.airbnb.dto.location.DistrictResponseDto;
+import com.khanh.airbnb.exceptions.ResourceNotFoundException;
 import com.khanh.airbnb.mappers.DistrictMapper;
 import com.khanh.airbnb.repositories.CityRepository;
 import com.khanh.airbnb.repositories.DistrictRepository;
@@ -30,7 +31,11 @@ public class DistrictServiceImpl implements DistrictService {
 
     @Override
     public List<DistrictResponseDto> findByCityId(Integer cityId) {
-        Optional<CityEntity> city = cityRepository.findById(cityId);
+        Optional<CityEntity> opCity = cityRepository.findById(cityId);
+        if (opCity.isEmpty()){
+            throw new ResourceNotFoundException("City not found");
+        }
+        CityEntity city = opCity.get();
         List<DistrictEntity> districts= districtRepository.findByCityEntity(city);
         return districts.stream().map(districtMapper::toDto).collect(Collectors.toList());
     }
