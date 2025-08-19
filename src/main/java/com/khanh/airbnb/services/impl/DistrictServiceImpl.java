@@ -31,11 +31,8 @@ public class DistrictServiceImpl implements DistrictService {
 
     @Override
     public List<DistrictResponseDto> findByCityId(Integer cityId) {
-        Optional<CityEntity> opCity = cityRepository.findById(cityId);
-        if (opCity.isEmpty()){
-            throw new ResourceNotFoundException("City not found");
-        }
-        CityEntity city = opCity.get();
+        CityEntity city = cityRepository.findById(cityId)
+                .orElseThrow(() -> new ResourceNotFoundException("City not found"));
         List<DistrictEntity> districts= districtRepository.findByCityEntity(city);
         return districts.stream().map(districtMapper::toDto).collect(Collectors.toList());
     }

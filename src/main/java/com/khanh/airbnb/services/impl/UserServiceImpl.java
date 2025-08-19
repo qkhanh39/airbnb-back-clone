@@ -1,6 +1,7 @@
 package com.khanh.airbnb.services.impl;
 
 import com.khanh.airbnb.domain.entities.UserEntity;
+import com.khanh.airbnb.exceptions.ResourceNotFoundException;
 import com.khanh.airbnb.repositories.UserRepository;
 import com.khanh.airbnb.services.UserService;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,6 @@ public class UserServiceImpl implements UserService {
             Optional.ofNullable(userEntity.getFullName()).ifPresent(existingUser::setFullName);
             Optional.ofNullable(userEntity.getEmail()).ifPresent(existingUser::setEmail);
             return userRepository.save(existingUser);
-        }).orElseThrow(() -> new RuntimeException("User not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 }

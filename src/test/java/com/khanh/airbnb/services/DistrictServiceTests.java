@@ -3,6 +3,7 @@ package com.khanh.airbnb.services;
 import com.khanh.airbnb.domain.entities.CityEntity;
 import com.khanh.airbnb.domain.entities.DistrictEntity;
 import com.khanh.airbnb.dto.location.DistrictResponseDto;
+import com.khanh.airbnb.exceptions.ResourceNotFoundException;
 import com.khanh.airbnb.mappers.DistrictMapper;
 import com.khanh.airbnb.repositories.CityRepository;
 import com.khanh.airbnb.repositories.DistrictRepository;
@@ -17,8 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class DistrictServiceTests {
@@ -59,5 +60,17 @@ public class DistrictServiceTests {
         verify(cityRepository).findById(1);
         verify(districtMapper).toDto(testDistrictA);
         verify(districtMapper).toDto(testDistrictB);
+    }
+
+    @Test
+    public void testThatNotFoundCityReturnsResourceNotFoundException() {
+        when(cityRepository.findById(999)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            districtService.findByCityId(999);
+        });
+
+        verify(cityRepository).findById(999);
+        verifyNoMoreInteractions(districtRepository, districtMapper);
     }
 }

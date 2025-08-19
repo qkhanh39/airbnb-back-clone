@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface WardRepository extends JpaRepository<WardEntity, Integer> {
-    List<WardEntity> findByDistrictEntity(Optional<DistrictEntity> opDistrict);
+    List<WardEntity> findByDistrictEntity(DistrictEntity district);
 }

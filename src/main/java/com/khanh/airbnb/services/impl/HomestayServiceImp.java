@@ -48,27 +48,22 @@ public class HomestayServiceImp implements HomestayService {
 
     @Override
     public HomestayResponseDto createHomestay(UserEntity user, HomestayRequestDto request) {
-        Optional<CityEntity> opCity = cityRepository.findById(request.getCityId());
+        CityEntity city = cityRepository.findById(request.getCityId())
+                .orElseThrow(() -> new ResourceNotFoundException("City not found"));
 
-        if (opCity.isEmpty()) {
-            throw new ResourceNotFoundException("City not found");
-        }
+        WardEntity ward = wardRepository.findById(request.getWardId())
+                .orElseThrow(() -> new ResourceNotFoundException("Ward not found"));
 
-        Optional<WardEntity> opWard = wardRepository.findById(request.getWardId());
-        if (opWard.isEmpty()) {
-            throw  new ResourceNotFoundException("Ward not found");
-        }
-        Optional<DistrictEntity> opDistrict = districtRepository.findById(request.getDistrictId());
-        if (opDistrict.isEmpty()){
-            throw new ResourceNotFoundException("District not found");
-        }
+        DistrictEntity district = districtRepository.findById(request.getDistrictId())
+                .orElseThrow(() -> new ResourceNotFoundException("District not found"));
+
 
         HomestayEntity homestayEntity = HomestayEntity.builder()
                 .name(request.getName())
                 .address(request.getAddress())
-                .cityEntity(opCity.get())
-                .districtEntity(opDistrict.get())
-                .wardEntity(opWard.get())
+                .cityEntity(city)
+                .districtEntity(district)
+                .wardEntity(ward)
                 .userEntity(user)
                 .priceDefault(request.getPriceDefault())
                 .maxGuests(request.getMaxGuests())
@@ -103,22 +98,16 @@ public class HomestayServiceImp implements HomestayService {
 
     @Override
     public HomestayResponseDto getHomestay(Long homestayId) {
-        Optional<HomestayEntity> opHomestay = homestayRepository.findById(homestayId);
-        if (opHomestay.isEmpty()){
-            throw new ResourceNotFoundException("Homestay not found.");
-        }
-        return homestayMapper.toDto(opHomestay.get());
+        HomestayEntity homestay = homestayRepository.findById(homestayId)
+                .orElseThrow(() -> new ResourceNotFoundException("Homestay not found"));
+        return homestayMapper.toDto(homestay);
     }
 
     @Override
     @Transactional
     public HomestayResponseDto updateHomestay(UserEntity user, Long homestayId, HomestayRequestDto request) {
-        Optional<HomestayEntity> opHomestay = homestayRepository.findById(homestayId);
-        if (opHomestay.isEmpty()) {
-            throw new ResourceNotFoundException("Homestay not found.");
-        }
-
-        HomestayEntity homestay = opHomestay.get();
+        HomestayEntity homestay = homestayRepository.findById(homestayId)
+                .orElseThrow(() -> new ResourceNotFoundException("Homestay not found"));
 
         if (!user.getUserId().equals(homestay.getUserEntity().getUserId())) {
             throw new AccessDeniedException("You are not the host of this homestay.");

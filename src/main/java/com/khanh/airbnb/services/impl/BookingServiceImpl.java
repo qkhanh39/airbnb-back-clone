@@ -53,7 +53,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingResponseDto bookHomestay(UserEntity user, BookingRequestDto request) {
         HomestayEntity homestay = homestayRepository.findById(request.getHomestayId())
-                .orElseThrow(() -> new RuntimeException("Homestay not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Homestay not found"));
         if (homestay.getMaxGuests() < request.getGuests()){
             throw new IllegalArgumentException("This homestay does not allow more than " + homestay.getMaxGuests());
         }
@@ -134,11 +134,9 @@ public class BookingServiceImpl implements BookingService {
     @Override
     @Transactional
     public BookingResponseDto confirmBooking(UserEntity user, Long bookingId) {
-        Optional<BookingEntity> opBooking = bookingRepository.findById(bookingId);
-        if (opBooking.isEmpty()) {
-            throw new ResourceNotFoundException("Booking is not exist");
-        }
-        BookingEntity booking = opBooking.get();
+        BookingEntity booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking is not exist"));
+
         HomestayEntity homestay = booking.getHomestayEntity();
         if (!user.getUserId().equals(homestay.getUserEntity().getUserId())) {
             throw new AccessDeniedException("You are not the host of this homestay");
